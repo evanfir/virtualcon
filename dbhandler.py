@@ -77,7 +77,34 @@ class dbHandler:
             info = self._cursorObj.fetchall()
             self._conn.close()
             return info
-
     
-    # def makeKeywords(inputStr):å
+    ## update answer
+    # @params: question str, answer str
+    def updateQuestion(self, question, answer):
+        if self._dbtype == "qa":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            # values = "\"" + studentID + "\""
+            selectStr = "UPDATE " + self._dbName + " SET Answer = \"" + answer + "\" WHERE Question = \"" + question + "\""
+            print(selectStr)
+            self._cursorObj.execute(selectStr)
+            self._conn.commit()
+            self._conn.close()
+
+    ## update student info based on studentID
+    # @params: studentID int, firstName str, lastName str, major str
+    def updateStudentInfo(self, studentID, firstName, lastName, major):
+        if self._dbtype == "student":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            updateInfo = "UPDATE " + self._dbName + " SET FirstName = \"" + firstName + "\" WHERE StudentID = " + str(studentID)
+            self._cursorObj.execute(updateInfo)
+
+            updateInfo = "UPDATE " + self._dbName + " SET LastName = \"" + lastName + "\" WHERE StudentID = " + str(studentID)
+            self._cursorObj.execute(updateInfo)
+
+            updateInfo = "UPDATE " + self._dbName + " SET Major = \"" + major + "\" WHERE StudentID = " + str(studentID)
+            self._cursorObj.execute(updateInfo)
+            self._conn.commit()
+            self._conn.close()
 
