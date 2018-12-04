@@ -1,0 +1,82 @@
+body {
+  background-color: rgb(255, 255, 255);
+  font: 300 1.25em/1.38 Ubuntu;
+  color: rgb(117, 156, 240);
+}
+
+.element {
+  position: relative;
+  float: left;
+  z-index: 0;
+  width: 54.4166666666%;
+  height: 419px;
+  margin: 39px 0 0 23.58073%;
+  border-radius: 2px;
+  background-color: rgb(222, 222, 222);
+}
+
+.text {
+  position: relative;
+  float: left;
+  clear: both;
+  z-index: 1;
+  width: 38.1666666666%;
+  min-height: 72px;
+  margin: -390px 0 0 33.07813%;
+  padding: 20px;
+  border-radius: 11px;
+  background-color: rgb(221, 221, 220);
+  font-size: 1em;
+  text-transform: uppercase;
+  word-spacing: 1px;
+  color: rgb(117, 156, 240);
+}
+
+._button {
+  display: block;
+  position: relative;
+  float: left;
+  z-index: 5;
+  width: 10.6833333333%;
+  height: 40px;
+  margin: -74px 0 0 46.91667%;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: rgb(204, 204, 204);
+  font-family: 'Roboto Condensed';
+  font-size: 0.85em;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+._input {
+  display: block;
+  position: relative;
+  float: left;
+  width: 16%;
+  margin-left: 44%;
+  padding: 0 10px;
+  background-color: rgb(242, 242, 242);
+  font-family: 'Merriweather Sans';
+  font-size: 0.65em;
+  font-weight: 400;
+  color: rgb(0, 0, 0);
+}
+
+._input-1 {
+  z-index: 4;
+  height: 36px;
+  margin-top: -282px;
+}
+
+._input-2 {
+  z-index: 2;
+  height: 34px;
+  margin-top: -224px;
+}
+
+._input-3 {
+  z-index: 3;
+  height: 39px;
+  margin-top: -168px;
+}
