@@ -8,7 +8,6 @@ api = Api(app)
 
 studentDB = dbHandler("student", "student") #initiate studentDB
 QuestionDB = dbHandler("qa", "qa") #initiate Question and Answers DB
-emailClient = EmailClient()
 
 parser = reqparse.RequestParser() 
 
@@ -94,6 +93,7 @@ class EmailApi(Resource):
     parser.add_argument('body')
     
     def post(self):
+        emailClient = EmailClient()
         args = parser.parse_args()
         emailClient.sendMail(args['sender'], args['subject'], args['body'])
         return 201
