@@ -1,13 +1,14 @@
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
 from dbhandler import *
-
+from emailHandler import EmailClient
 
 app = Flask(__name__)
 api = Api(app)
 
 studentDB = dbHandler("student", "student") #initiate studentDB
 QuestionDB = dbHandler("qa", "qa") #initiate Question and Answers DB
+emailClient = EmailClient()
 
 parser = reqparse.RequestParser() 
 
@@ -84,10 +85,23 @@ class AdminApi(Resource):
         QuestionDB.updateQuestion(args['question'], args['answer'])
         return ("Question: ", args['question'], "Answer: ", args['answer']), 201
 
+## Email client API handles emails student wanna send to the admin
+# to call: /EmailApi?sender=XXXX&subject=XXXX&body=XXXX
+# only has post interface
+class EmailApi(Resource):
+    parser.add_argument('sender')
+    parser.add_argument('subject')
+    parser.add_argument('body')
+    
+    def post(self):
+        args = parser.parse_args()
+        emailClient.sendMail(args['sender'], args['subject'], args['body'])
+        return 201
+
 
 api.add_resource(StudentInfo, "/StudentInfo")
 api.add_resource(StudentApi, "/StudentApi")
 api.add_resource(AdminApi, "/AdminApi")
-
+api.add_resource(EmailApi, "/EmailApi")
 def runFlask():
     app.run(debug=True)
