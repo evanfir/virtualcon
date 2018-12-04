@@ -29,7 +29,7 @@ class dbHandler:
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
             values = str(dbHandler.QAID) + ", \"" + question + "\", \"" + answer + "\""
-            insertStr = "INSERT INTO " + self._dbName + " (ID, Question, Answer) VALUES (" + values + ");"
+            insertStr = "INSERT OR REPLACE INTO " + self._dbName + " (ID, Question, Answer) VALUES (" + values + ");"
             # print("DEBUG: insertStr: " + insertStr)
             self._cursorObj.execute(insertStr)
             self._conn.commit()
@@ -45,7 +45,7 @@ class dbHandler:
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
             values = str(studentID) + ",\"" + firstName + "\", \"" + lastName + "\", \"" + major + "\""
-            insertStr = "INSERT INTO " + self._dbName + " (StudentID, FirstName, LastName, Major) VALUES (" + values + ");"
+            insertStr = "INSERT OR REPLACE INTO " + self._dbName + " (StudentID, FirstName, LastName, Major) VALUES (" + values + ");"
             self._cursorObj.execute(insertStr)
             self._conn.commit()
             self._conn.close()
@@ -85,7 +85,7 @@ class dbHandler:
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
             # values = "\"" + studentID + "\""
-            selectStr = "UPDATE " + self._dbName + " SET Answer = \"" + answer + "\" WHERE Question = \"" + question + "\""
+            selectStr = "INSERT OR REPLACE INTO " + self._dbName + " SET Answer = \"" + answer + "\" WHERE Question = \"" + question + "\""
             print(selectStr)
             self._cursorObj.execute(selectStr)
             self._conn.commit()
@@ -97,13 +97,17 @@ class dbHandler:
         if self._dbtype == "student":
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
-            updateInfo = "UPDATE " + self._dbName + " SET FirstName = \"" + firstName + "\" WHERE StudentID = " + str(studentID)
-            self._cursorObj.execute(updateInfo)
+            # updateInfo = "UPDATE " + self._dbName + " SET FirstName = \"" + firstName + "\" WHERE StudentID = " + str(studentID)
+            # self._cursorObj.execute(updateInfo)
 
-            updateInfo = "UPDATE " + self._dbName + " SET LastName = \"" + lastName + "\" WHERE StudentID = " + str(studentID)
-            self._cursorObj.execute(updateInfo)
+            # updateInfo = "UPDATE " + self._dbName + " SET LastName = \"" + lastName + "\" WHERE StudentID = " + str(studentID)
+            # self._cursorObj.execute(updateInfo)
 
-            updateInfo = "UPDATE " + self._dbName + " SET Major = \"" + major + "\" WHERE StudentID = " + str(studentID)
+            # updateInfo = "UPDATE " + self._dbName + " SET Major = \"" + major + "\" WHERE StudentID = " + str(studentID)
+            values = str(studentID) + ",\"" + firstName + "\", \"" + lastName + "\", \"" + major + "\""
+
+            updateInfo = "INSERT OR REPLACE INTO " + self._dbName + " (StudentID, FirstName, LastName, Major) VALUES (" + values + ");"
+
             self._cursorObj.execute(updateInfo)
             self._conn.commit()
             self._conn.close()
