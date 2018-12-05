@@ -13,9 +13,15 @@
   <div class="element element-1"></div>
   <p class="text">Virtual Counselor</p>
   <button onClick="window.location='welcome.html';" class="_button _button-1">X</button>
-  <div class="element element-2"></div>
-  <div class="element element-3"></div>
-  <input class="_input" name="question" placeholder="Ask a question..." type="search">
-  <button class="_button _button-2" type="button">Send</button>
+  <div class="element element-2"><textarea id="answers"></textarea></div>
+  <div class="element element-3"><textarea id="questions"></textarea></div>
+  <input class="_input" id="question" name="question" placeholder="Ask a question..." type="search">
+  <button class="_button _button-2" type="button" onclick="addQuestion(event)">Send</button>
+  <script>
+  	function addText(event) {
+    	var targ = event.target || event.srcElement;
+		document.getElementById("questions").value += targ.textContent || targ.innerText;
+	}
+</script>
 </body>
 </html>

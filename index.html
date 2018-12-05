@@ -11,13 +11,81 @@
 </head>
 <body class="body page-index clearfix">
   <div class="element"></div>
-  <p class="text">Virtual Counselor</p>
-  <input class="_input _input-1" placeholder="Student ID" type="number">
-  <input class="_input _input-2" placeholder="First Name" type="text">
-  <input class="_input _input-3" placeholder="Last Name" type="text">
-  <input class="_input _input-4" placeholder="Major" type="text">
-  <input class="_input _input-5" placeholder="Password" type="password">
-  <button onClick="window.location='welcome.html';" class="_button _button-1">Guest?</button>
-  <button onClick="window.location='welcome.html';" class="_button _button-2">Start Session</button>
+  <!--http://127.0.0.1:5000/StudentInfo?-->
+  <form action="index/welcome.html" method="post" onsubmit="return submitForm()">
+	  <p class="text text-1" align="center">Virtual Counselor</p>
+	  <p class="text text-2" id="stdid1">Invalid</p>
+	  <input id="stdid" class="_input _input-1" placeholder="Student ID" type="number" min="100000" max="1000000" onblur='studentID()'>
+	  <p class="text text-3" id="fname1">Invalid</p>
+	  <input id="fname" class="_input _input-2" placeholder="First Name" type="text" maxlength="35" onblur='req("fname")'>
+	  <p class="text text-4"id="lname1">Invalid</p>
+	  <input id="lname" class="_input _input-3" placeholder="Last Name" type="text"  maxlength="35" onblur='req("lname")'>
+	  <p class="text text-5" id="major1">Invalid</p>
+	  <input id="major" class="_input _input-4" placeholder="Major" type="text" maxlength="50" onblur='req("major")'>
+	  <p class="text text-6" id="pwd1">Invalid</p>
+	  <input id="pwd" class="_input _input-5" placeholder="Password" type="password" onBlur='password()'>
+	  <button onClick="return ValidateGuest()" class="_button _button-1">Guest?</button>
+	  <button onClick="return validate()" class="_button _button-2" type="submit">Start Session</button>
+  </form>
+  <script>
+	function submitForm(){
+		
+		return true;
+	}
+	  
+	function validate() {
+		//student id  and password required
+		return (studentID() && password());
+	}
+
+	function ValidateGuest(){
+		return (req("fname") && req("lname") && req("major"));
+		//fname, lname and major required		
+	}
+	
+	function studentID(){
+		var elem=document.getElementById('stdid');
+		var nalt=document.getElementById('stdid1');		
+		if (isNaN(elem.value) || elem.value < 100000 || elem.value > 1000000) {
+			nalt.style.visibility="visible";
+			document.getElementById('stdid').focus();
+			document.getElementById('stdid').value="";
+			return false;
+		}else{
+			nalt.style.visibility="Hidden";
+			return true;
+		}
+	}
+	
+	function req(x){
+		var elem=document.getElementById(x);
+		var nalt=document.getElementById(x+1);
+
+		if(elem.value.length<2){
+			nalt.style.visibility="visible";
+			elem.focus();
+			elem.value="";
+			return false;
+		}else{
+			nalt.style.visibility="Hidden";
+			return true;
+		}
+	}	
+		
+	function password(){
+		var pawd1=document.getElementById('pwd');
+		var palt=document.getElementById('pwd1');
+		if(pawd1.value.length<6){
+			palt.style.visibility="visible";
+			document.getElementById('pwd').focus();
+			return false;
+		}
+		else{
+			palt.style.visibility="Hidden";
+			return true;
+		}
+	}
+</script>
+
 </body>
 </html>
