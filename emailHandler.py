@@ -20,7 +20,7 @@ class EmailClient():
         self.__server = smtplib.SMTP(__host, __port)
         self.__server.starttls()
         
-
+    ##send an email using the input data
     def sendMail(self, sender, subject, body):
         self.__msg.add_header("reply-to", sender)
         self.__server.login(USERNAME, PASSWORD)
