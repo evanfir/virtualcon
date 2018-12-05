@@ -22,7 +22,7 @@ body {
   z-index: 1;
   width: 38.1666666666%;
   min-height: 72px;
-  margin: -390px 0 0 33.07813%;
+  margin: -390px 0 0 32.99349%;
   padding: 20px;
   border-radius: 11px;
   background-color: rgb(221, 221, 220);
@@ -36,10 +36,8 @@ body {
   display: block;
   position: relative;
   float: left;
-  z-index: 5;
-  width: 10.6833333333%;
   height: 40px;
-  margin: -74px 0 0 46.91667%;
+  margin-top: -74px;
   padding: 5px;
   border-radius: 4px;
   background-color: rgb(204, 204, 204);
@@ -57,26 +55,49 @@ body {
   margin-left: 44%;
   padding: 0 10px;
   background-color: rgb(242, 242, 242);
-  font-family: 'Merriweather Sans';
+  font-family: 'Roboto Condensed';
   font-size: 0.65em;
-  font-weight: 400;
   color: rgb(0, 0, 0);
+}
+
+._button-1 {
+  z-index: 8;
+  width: 10.6822916666%;
+  margin-left: 40.11719%;
+}
+
+._button-2 {
+  z-index: 5;
+  width: 10.6833333333%;
+  margin-left: 53.71745%;
 }
 
 ._input-1 {
   z-index: 4;
   height: 36px;
-  margin-top: -282px;
+  margin-top: -305px;
 }
 
 ._input-2 {
-  z-index: 2;
-  height: 34px;
-  margin-top: -224px;
+  z-index: 6;
+  height: 36px;
+  margin-top: -261px;
 }
 
 ._input-3 {
+  z-index: 2;
+  height: 34px;
+  margin-top: -218px;
+}
+
+._input-4 {
   z-index: 3;
   height: 39px;
-  margin-top: -168px;
+  margin-top: -178px;
+}
+
+._input-5 {
+  z-index: 7;
+  height: 39px;
+  margin-top: -133px;
 }

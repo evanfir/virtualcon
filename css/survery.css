@@ -1,0 +1,98 @@
+body {
+  background-color: rgb(255, 255, 255);
+  font: 300 1em/1.38 'Roboto Condensed';
+  color: rgb(0, 0, 0);
+}
+
+.element {
+  position: relative;
+  float: left;
+  z-index: 0;
+  width: 54.4166666666%;
+  height: 419px;
+  margin: 39px 0 0 23.65625%;
+  border-radius: 2px;
+  background-color: rgb(222, 222, 222);
+}
+
+.text {
+  position: relative;
+  float: left;
+}
+
+.text-2 p {
+  margin-bottom: 1em;
+}
+
+._button {
+  display: block;
+  position: relative;
+  float: left;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+._input {
+  display: block;
+  position: relative;
+  float: left;
+  z-index: 3;
+  width: 32.0833333333%;
+  height: 39px;
+  margin: -66px 0 0 33.74349%;
+  padding: 0 10px;
+  border-radius: 2px;
+  background-color: rgb(242, 242, 242);
+  font-size: 0.938em;
+  color: rgb(0, 0, 0);
+}
+
+.text-1 {
+  clear: both;
+  z-index: 1;
+  width: 38.1666666666%;
+  min-height: 72px;
+  margin: -390px 0 0 33.02214%;
+  padding: 20px;
+  border-radius: 11px;
+  background-color: rgb(221, 221, 220);
+  font-family: Ubuntu;
+  font-size: 1.25em;
+  text-transform: uppercase;
+  word-spacing: 1px;
+  color: rgb(117, 156, 240);
+}
+
+.text-2 {
+  z-index: 5;
+  width: 43%;
+  min-height: 180px;
+  margin: -303px 0 0 29.59896%;
+  border-radius: 2px;
+  background-color: rgba(148, 142, 142, 0.31);
+  font-size: 1em;
+  color: rgb(0, 0, 0);
+}
+
+._button-1 {
+  z-index: 4;
+  width: 1.5833333333%;
+  height: 21px;
+  margin: -405px 0 0 74.82031%;
+  border-radius: 3px;
+  background-color: rgb(198, 196, 196);
+  font-family: Cardo;
+  font-size: 1em;
+  font-weight: 400;
+}
+
+._button-2 {
+  z-index: 2;
+  width: 6.8333333333%;
+  height: 24px;
+  margin: -65px 0 0 66.95573%;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: rgb(204, 204, 204);
+  font-size: 0.813em;
+}
