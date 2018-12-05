@@ -1,5 +1,5 @@
 import sqlite3
-
+# import json
 
 class dbHandler:
     QAID = 0
@@ -33,13 +33,20 @@ class dbHandler:
         if self._dbtype == "qa":
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
-            values = str(dbHandler.QAID) + ", \"" + question + "\", \"" + answer + "\""
+            self._cursorObj.execute("SELECT ID FROM " + self._dbName + " order by ID DESC LIMIT 1")
+            QAID = self._cursorObj.fetchall()
+            if QAID is None:
+                QAID = 0
+            else:
+                QAID = QAID[0][0] + 1
+            # print("\nQAID: ", QAID, "\n")
+            values = str(QAID) + ", \"" + question + "\", \"" + answer + "\""
             insertStr = "INSERT OR REPLACE INTO " + self._dbName + " (ID, Question, Answer) VALUES (" + values + ");"
             # print("DEBUG: insertStr: " + insertStr)
             self._cursorObj.execute(insertStr)
             self._conn.commit()
             self._conn.close()
-            dbHandler.QAID = dbHandler.QAID + 1
+            # dbHandler.QAID = dbHandler.QAID + 1
 
 
     ## retrieve answer of a question
@@ -49,8 +56,12 @@ class dbHandler:
         if self._dbtype == "qa":
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
-            values = "\"" + question + "\""
-            selectStr = "SELECT Answer FROM " + self._dbName + " WHERE Question = " + values
+            
+            if question is not '*':
+                values = "\"" + question + "\""
+                selectStr = "SELECT Answer FROM " + self._dbName + " WHERE Question = " + values
+            else:
+                selectStr = "SELECT * FROM " + self._dbName
             self._cursorObj.execute(selectStr)
             answer = self._cursorObj.fetchall()
             self._conn.close()
@@ -123,13 +134,25 @@ class dbHandler:
     ## insert survey resutls to the database
     # @params: question1 str, comment str, id int
     # check to make sure that dbtype is survey before proceeding
-    def insertSurvey(self, question1, comment = " ", id = 000):
+    def insertSurvey(self, rate, comment = " ", id = 000):
         if self._dbtype == "survey":
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
-            values = str(id) + ", \"" + question1 + "\", \"" + comment + "\""
-            insertStr = "INSERT INTO " + self._dbName + " (ID, Question1, Comment) VALUES (" + values + ");"
+            values = str(id) + ", \"" + rate + "\", \"" + comment + "\""
+            insertStr = "INSERT INTO " + self._dbName + " (ID, Rate, Comment) VALUES (" + values + ");"
             # print("DEBUG: insertStr: " + insertStr)
             self._cursorObj.execute(insertStr)
             self._conn.commit()
             self._conn.close()
+
+    def retrieveSurveyResults(self):
+        if self._dbtype == "survey":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            retrieveStr = "SELECT * FROM " + self._dbName
+            self._cursorObj.execute(retrieveStr)
+            returnStr = self._cursorObj.fetchall()
+            self._conn.commit()
+            self._conn.close()
+
+            return returnStr

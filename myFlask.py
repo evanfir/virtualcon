@@ -10,6 +10,7 @@ api = Api(app)
 
 studentDB = dbHandler("student", "student") #initiate studentDB
 QuestionDB = dbHandler("qa", "qa") #initiate Question and Answers DB
+SurveyDB = dbHandler("survey", "survey")
 
 parser = reqparse.RequestParser() 
 
@@ -69,7 +70,10 @@ class AdminApi(StudentApi):
     def get(self):
         args = parser.parse_args()
         question = args["question"]
-        answer = QuestionDB.retrieveAnswer(question)
+        if question is None:
+            answer = QuestionDB.retrieveAnswer("*")
+        else:
+            answer = QuestionDB.retrieveAnswer(question)
         if len(answer) > 0:
             return answer, 200
         else:
@@ -78,14 +82,23 @@ class AdminApi(StudentApi):
 
     def post(self):
         args = parser.parse_args()
-        QuestionDB.insertQuestion(args['question'], args['answer'])
-        return ("Question: ", args['question'], "Answer: ", args['answer']), 201
-
+        question = args['question']
+        answer = args['answer']
+        if question is not None and answer is not None:
+            QuestionDB.insertQuestion(args['question'], args['answer'])
+            return ("Question: ", args['question'], "Answer: ", args['answer']), 201
+        else:
+            return "Question or Answer or both are missing", 404
 
     def put(self):
         args = parser.parse_args()
-        QuestionDB.updateQuestion(args['question'], args['answer'])
-        return ("Question: ", args['question'], "Answer: ", args['answer']), 201
+        question = args['question']
+        answer = args['answer']
+        if question is not None and answer is not None:
+            QuestionDB.updateQuestion(question, answer)
+            return ("Question: ", question, "Answer: ", answer), 201
+        else:
+            return "Question or Answer or both are missing", 404
 
 
 ## Email client API handles emails student wanna send to the admin
@@ -99,7 +112,16 @@ class EmailApi(Resource):
     def post(self):
         emailClient = EmailClient()
         args = parser.parse_args()
-        emailClient.sendMail(args['sender'], args['subject'], args['body'])
+        sender = args['sender']
+        subject = args['subject'] 
+        body = args['body']
+        if sender is None:
+            sender = "N/A"
+        if subject is None:
+            subject = "N/A"
+        if body is None:
+            body = "N/A"
+        emailClient.sendMail(sender, subject, body)
         return 201
 
 
@@ -107,7 +129,7 @@ class EmailApi(Resource):
 # to call: /VCrawler?to=XXXX
 # currently only supports: UCB, UCI, UCD, and UCLA
 # only has get and returns a link to an iFrame HTML page
-class VCrawler(Resource):
+class CrawlerApi(Resource):
     parser.add_argument("to")
     
     def get(self):
@@ -116,11 +138,39 @@ class VCrawler(Resource):
         link = crawler.getiFrameLink()
         return link, 200
 
+
+class SurveyApi(Resource):
+    parser.add_argument("question")
+    parser.add_argument("comment")
+    parser.add_argument("id")
+    
+    def get(self):
+        results = SurveyDB.retrieveSurveyResults()
+        # print("\n\n")
+        # print(results)
+        # print("\n\n")
+        return results, 200
+
+    def post(self):
+        args = parser.parse_args()
+        rate = args['rate']
+        comment = args['comment']
+        studentID = args['id']
+        if rate is None:
+            rate = -1
+        if comment is None:
+            comment = "N/A"
+        if studentID is None:
+            studentID = 0
+        SurveyDB.insertSurvey(rate, comment, studentID)
+        return rate, comment, studentID, 201
+        
 api.add_resource(StudentInfo, "/StudentInfo")
 api.add_resource(StudentApi, "/StudentApi")
 api.add_resource(AdminApi, "/AdminApi")
 api.add_resource(EmailApi, "/EmailApi")
-api.add_resource(VCrawler, "/VCrawler")
+api.add_resource(CrawlerApi, "/CrawlerApi")
+api.add_resource(SurveyApi, "/SurveyApi")
 
 def runFlask():
     app.run(debug=True)
