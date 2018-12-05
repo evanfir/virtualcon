@@ -4,3 +4,5 @@ sqlite3
 email.mime.multipart
 email.mime.text
 smtplib
+beautifulsoup4
+requests
