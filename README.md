@@ -8,7 +8,7 @@ Program designed in a way that its use can expand to all other majors.
 
 To improve the exprience, it gets the transfer information from assist.org and shows it to the student.
 
-##Structure
+## Structure
 
 This program is a multi parter and consists of:
 dbHandler: to handle 3 databases
@@ -18,7 +18,7 @@ vcCrawler: that crawls assist.org for the information on transfer
 survey: manages the final survey
 GUI: we used JS and HTML/CSS as the programs UI
 
-##database
+## database
 We used sqlite3 for database. 
 
 Currently we are managing 3 different databases:
