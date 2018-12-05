@@ -2,7 +2,6 @@ import sqlite3
 # import json
 
 class dbHandler:
-    QAID = 0
     ## initialize a database
     # @params: database name without .db, dbtype: student/qa
     def __init__(self, dbname, dbtype):
@@ -33,6 +32,8 @@ class dbHandler:
         if self._dbtype == "qa":
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
+            
+            # get the last entry's ID
             self._cursorObj.execute("SELECT ID FROM " + self._dbName + " order by ID DESC LIMIT 1")
             QAID = self._cursorObj.fetchall()
             if QAID is None:
@@ -46,7 +47,6 @@ class dbHandler:
             self._cursorObj.execute(insertStr)
             self._conn.commit()
             self._conn.close()
-            # dbHandler.QAID = dbHandler.QAID + 1
 
 
     ## retrieve answer of a question
@@ -75,7 +75,20 @@ class dbHandler:
             self._cursorObj = self._conn.cursor()
             # values = "\"" + studentID + "\""
             selectStr = "INSERT OR REPLACE INTO " + self._dbName + " SET Answer = \"" + answer + "\" WHERE Question = \"" + question + "\""
-            print(selectStr)
+            # print(selectStr)
+            self._cursorObj.execute(selectStr)
+            self._conn.commit()
+            self._conn.close()
+
+    ## delete a question and its answer
+    # @param: question str
+    def deleteQuestion(self, question):
+        if self._dbtype == "qa":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            # values = "\"" + studentID + "\""
+            selectStr = "DELETE FROM " + self._dbName + " WHERE Question = \"" + question + "\""
+            # print(selectStr)
             self._cursorObj.execute(selectStr)
             self._conn.commit()
             self._conn.close()
@@ -115,17 +128,8 @@ class dbHandler:
         if self._dbtype == "student":
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
-            # updateInfo = "UPDATE " + self._dbName + " SET FirstName = \"" + firstName + "\" WHERE StudentID = " + str(studentID)
-            # self._cursorObj.execute(updateInfo)
-
-            # updateInfo = "UPDATE " + self._dbName + " SET LastName = \"" + lastName + "\" WHERE StudentID = " + str(studentID)
-            # self._cursorObj.execute(updateInfo)
-
-            # updateInfo = "UPDATE " + self._dbName + " SET Major = \"" + major + "\" WHERE StudentID = " + str(studentID)
             values = str(studentID) + ",\"" + firstName + "\", \"" + lastName + "\", \"" + major + "\""
-
             updateInfo = "INSERT OR REPLACE INTO " + self._dbName + " (StudentID, FirstName, LastName, Major) VALUES (" + values + ");"
-
             self._cursorObj.execute(updateInfo)
             self._conn.commit()
             self._conn.close()
@@ -145,6 +149,8 @@ class dbHandler:
             self._conn.commit()
             self._conn.close()
 
+    ## retrieve all the survey results
+    # @return: a json view of all the results
     def retrieveSurveyResults(self):
         if self._dbtype == "survey":
             self._conn = sqlite3.connect(self._dbName)

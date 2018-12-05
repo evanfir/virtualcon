@@ -35,4 +35,4 @@ def main():
     vc = VirtualCrawler("UCLA")
     print(vc.getiFrameLink())
 
-main()
+# main()
