@@ -1,4 +1,6 @@
 import sqlite3
+
+
 class dbHandler:
     QAID = 0
     ## initialize a database
@@ -13,6 +15,8 @@ class dbHandler:
             self._columnNamesTypes = "StudentID int, FirstName TEXT, LastName TEXT, Major TEXT"
         if self._dbtype == "qa":
             self._columnNamesTypes = "ID INT, Question TEXT, Answer TEXT"
+        if self._dbtype == "survey":
+            self._columnNamesTypes = "ID INT, Question1 TEXT, Comment TEXT"
         
         createStr = '''CREATE TABLE IF NOT EXISTS ''' + dbname + ''' (''' + self._columnNamesTypes + ''');'''
         # createStr = '''CREATE TABLE student (StudentID int, FirstName TEXT);'''
@@ -20,6 +24,7 @@ class dbHandler:
         self._conn.commit()
         self._conn.close()
         # print("done")
+
 
     ## insert question and answer to the database
     # @params: question str, answer str
@@ -37,19 +42,6 @@ class dbHandler:
             dbHandler.QAID = dbHandler.QAID + 1
 
 
-    ## insert student info to the database
-    # @params: studentID int, firstName str, lastName str, major str
-    # check to make sure that dbtype is student before proceeding
-    def insertStudentInfo(self, studentID, firstName, lastName, major):
-        if self._dbtype == "student":
-            self._conn = sqlite3.connect(self._dbName)
-            self._cursorObj = self._conn.cursor()
-            values = str(studentID) + ",\"" + firstName + "\", \"" + lastName + "\", \"" + major + "\""
-            insertStr = "INSERT OR REPLACE INTO " + self._dbName + " (StudentID, FirstName, LastName, Major) VALUES (" + values + ");"
-            self._cursorObj.execute(insertStr)
-            self._conn.commit()
-            self._conn.close()
-
     ## retrieve answer of a question
     # @params: question str
     # @return: answer: a list of a single set with 1 value
@@ -64,6 +56,33 @@ class dbHandler:
             self._conn.close()
             return answer
 
+    ## update answer
+    # @params: question str, answer str
+    def updateQuestion(self, question, answer):
+        if self._dbtype == "qa":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            # values = "\"" + studentID + "\""
+            selectStr = "INSERT OR REPLACE INTO " + self._dbName + " SET Answer = \"" + answer + "\" WHERE Question = \"" + question + "\""
+            print(selectStr)
+            self._cursorObj.execute(selectStr)
+            self._conn.commit()
+            self._conn.close()
+
+    ## insert student info to the database
+    # @params: studentID int, firstName str, lastName str, major str
+    # check to make sure that dbtype is student before proceeding
+    def insertStudentInfo(self, studentID, firstName, lastName, major):
+        if self._dbtype == "student":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            values = str(studentID) + ",\"" + firstName + "\", \"" + lastName + "\", \"" + major + "\""
+            insertStr = "INSERT OR REPLACE INTO " + self._dbName + " (StudentID, FirstName, LastName, Major) VALUES (" + values + ");"
+            self._cursorObj.execute(insertStr)
+            self._conn.commit()
+            self._conn.close()
+
+    
     ## retrieve student info of a studentID
     # @params: studentID int
     # @return: studentInfo: a set of 3 values: firstName, LastName, Major
@@ -77,19 +96,7 @@ class dbHandler:
             info = self._cursorObj.fetchall()
             self._conn.close()
             return info
-    
-    ## update answer
-    # @params: question str, answer str
-    def updateQuestion(self, question, answer):
-        if self._dbtype == "qa":
-            self._conn = sqlite3.connect(self._dbName)
-            self._cursorObj = self._conn.cursor()
-            # values = "\"" + studentID + "\""
-            selectStr = "INSERT OR REPLACE INTO " + self._dbName + " SET Answer = \"" + answer + "\" WHERE Question = \"" + question + "\""
-            print(selectStr)
-            self._cursorObj.execute(selectStr)
-            self._conn.commit()
-            self._conn.close()
+
 
     ## update student info based on studentID
     # @params: studentID int, firstName str, lastName str, major str
@@ -112,3 +119,17 @@ class dbHandler:
             self._conn.commit()
             self._conn.close()
 
+
+    ## insert survey resutls to the database
+    # @params: question1 str, comment str, id int
+    # check to make sure that dbtype is survey before proceeding
+    def insertSurvey(self, question1, comment = " ", id = 000):
+        if self._dbtype == "survey":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            values = str(id) + ", \"" + question1 + "\", \"" + comment + "\""
+            insertStr = "INSERT INTO " + self._dbName + " (ID, Question1, Comment) VALUES (" + values + ");"
+            # print("DEBUG: insertStr: " + insertStr)
+            self._cursorObj.execute(insertStr)
+            self._conn.commit()
+            self._conn.close()
