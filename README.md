@@ -41,29 +41,29 @@ This file is the main interface of the backend of the program. We used flask res
 
 In this file, we have several classes as below:
 
-# StudentInfo
+### StudentInfo
 
 StudentInfo is the database interface for student information including student id, first and last name, and major.
 
 This class has get, post, and put methods.
 
-# StudentApi
+### StudentApi
 
 This class is the student interface for the question and answer database and does not let student edit/add or delete question or answers.
 
-# AdminApi
+### AdminApi
 
 AdminApi class is a subclass of StudentApi with more functionality. it has post, put, and delete functions as well that allows the system admin edit the database of the questions and answers
 
-# EmailApi
+### EmailApi
 
 This class is our email client's interface. Currently it only has post method that let a student send an email to the counselor.
 
-# CrawlerApi
+### CrawlerApi
 
 This class is our crawler's interface and currently only has get method.
 
-# SurveyApi
+### SurveyApi
 
 This class is the programs survey class interface and has get and post methods. 
 
