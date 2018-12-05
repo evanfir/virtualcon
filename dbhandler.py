@@ -1,4 +1,6 @@
 import sqlite3
+# import json
+
 class dbHandler:
     QAID = 0
     ## initialize a database
@@ -13,6 +15,8 @@ class dbHandler:
             self._columnNamesTypes = "StudentID int, FirstName TEXT, LastName TEXT, Major TEXT"
         if self._dbtype == "qa":
             self._columnNamesTypes = "ID INT, Question TEXT, Answer TEXT"
+        if self._dbtype == "survey":
+            self._columnNamesTypes = "ID INT, Question1 TEXT, Comment TEXT"
         
         createStr = '''CREATE TABLE IF NOT EXISTS ''' + dbname + ''' (''' + self._columnNamesTypes + ''');'''
         # createStr = '''CREATE TABLE student (StudentID int, FirstName TEXT);'''
@@ -21,6 +25,7 @@ class dbHandler:
         self._conn.close()
         # print("done")
 
+
     ## insert question and answer to the database
     # @params: question str, answer str
     # check to make sure that dbtype is qa before proceeding
@@ -28,14 +33,52 @@ class dbHandler:
         if self._dbtype == "qa":
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
-            values = str(dbHandler.QAID) + ", \"" + question + "\", \"" + answer + "\""
+            self._cursorObj.execute("SELECT ID FROM " + self._dbName + " order by ID DESC LIMIT 1")
+            QAID = self._cursorObj.fetchall()
+            if QAID is None:
+                QAID = 0
+            else:
+                QAID = QAID[0][0] + 1
+            # print("\nQAID: ", QAID, "\n")
+            values = str(QAID) + ", \"" + question + "\", \"" + answer + "\""
             insertStr = "INSERT OR REPLACE INTO " + self._dbName + " (ID, Question, Answer) VALUES (" + values + ");"
             # print("DEBUG: insertStr: " + insertStr)
             self._cursorObj.execute(insertStr)
             self._conn.commit()
             self._conn.close()
-            dbHandler.QAID = dbHandler.QAID + 1
+            # dbHandler.QAID = dbHandler.QAID + 1
 
+
+    ## retrieve answer of a question
+    # @params: question str
+    # @return: answer: a list of a single set with 1 value
+    def retrieveAnswer(self, question):
+        if self._dbtype == "qa":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            
+            if question is not '*':
+                values = "\"" + question + "\""
+                selectStr = "SELECT Answer FROM " + self._dbName + " WHERE Question = " + values
+            else:
+                selectStr = "SELECT * FROM " + self._dbName
+            self._cursorObj.execute(selectStr)
+            answer = self._cursorObj.fetchall()
+            self._conn.close()
+            return answer
+
+    ## update answer
+    # @params: question str, answer str
+    def updateQuestion(self, question, answer):
+        if self._dbtype == "qa":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            # values = "\"" + studentID + "\""
+            selectStr = "INSERT OR REPLACE INTO " + self._dbName + " SET Answer = \"" + answer + "\" WHERE Question = \"" + question + "\""
+            print(selectStr)
+            self._cursorObj.execute(selectStr)
+            self._conn.commit()
+            self._conn.close()
 
     ## insert student info to the database
     # @params: studentID int, firstName str, lastName str, major str
@@ -50,20 +93,7 @@ class dbHandler:
             self._conn.commit()
             self._conn.close()
 
-    ## retrieve answer of a question
-    # @params: question str
-    # @return: answer: a list of a single set with 1 value
-    def retrieveAnswer(self, question):
-        if self._dbtype == "qa":
-            self._conn = sqlite3.connect(self._dbName)
-            self._cursorObj = self._conn.cursor()
-            values = "\"" + question + "\""
-            selectStr = "SELECT Answer FROM " + self._dbName + " WHERE Question = " + values
-            self._cursorObj.execute(selectStr)
-            answer = self._cursorObj.fetchall()
-            self._conn.close()
-            return answer
-
+    
     ## retrieve student info of a studentID
     # @params: studentID int
     # @return: studentInfo: a set of 3 values: firstName, LastName, Major
@@ -77,19 +107,7 @@ class dbHandler:
             info = self._cursorObj.fetchall()
             self._conn.close()
             return info
-    
-    ## update answer
-    # @params: question str, answer str
-    def updateQuestion(self, question, answer):
-        if self._dbtype == "qa":
-            self._conn = sqlite3.connect(self._dbName)
-            self._cursorObj = self._conn.cursor()
-            # values = "\"" + studentID + "\""
-            selectStr = "INSERT OR REPLACE INTO " + self._dbName + " SET Answer = \"" + answer + "\" WHERE Question = \"" + question + "\""
-            print(selectStr)
-            self._cursorObj.execute(selectStr)
-            self._conn.commit()
-            self._conn.close()
+
 
     ## update student info based on studentID
     # @params: studentID int, firstName str, lastName str, major str
@@ -112,3 +130,29 @@ class dbHandler:
             self._conn.commit()
             self._conn.close()
 
+
+    ## insert survey resutls to the database
+    # @params: question1 str, comment str, id int
+    # check to make sure that dbtype is survey before proceeding
+    def insertSurvey(self, rate, comment = " ", id = 000):
+        if self._dbtype == "survey":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            values = str(id) + ", \"" + rate + "\", \"" + comment + "\""
+            insertStr = "INSERT INTO " + self._dbName + " (ID, Rate, Comment) VALUES (" + values + ");"
+            # print("DEBUG: insertStr: " + insertStr)
+            self._cursorObj.execute(insertStr)
+            self._conn.commit()
+            self._conn.close()
+
+    def retrieveSurveyResults(self):
+        if self._dbtype == "survey":
+            self._conn = sqlite3.connect(self._dbName)
+            self._cursorObj = self._conn.cursor()
+            retrieveStr = "SELECT * FROM " + self._dbName
+            self._cursorObj.execute(retrieveStr)
+            returnStr = self._cursorObj.fetchall()
+            self._conn.commit()
+            self._conn.close()
+
+            return returnStr

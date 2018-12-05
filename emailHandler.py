@@ -1,26 +1,41 @@
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-# from email.mime.image import MIMEImage
-# from email.mime.application import MIMEApplication
-USERNAME = ""
-PASSWORD = ""
-SENDER = ""
+
+
+USERNAME = "vc9038704@gmail.com"
+PASSWORD = "z4PAPpF64b$"
+# RECEIPIENT = "aa@bb.cc"
+
 class EmailClient():
     def __init__(self):
+        #make the MIME object for the header and body
         self.__msg = MIMEMultipart()
-        self.__msg.add_header("From", SENDER)
+        self.__msg.add_header("To", USERNAME)
+        self.__msg.add_header("From", USERNAME)
         __host = "smtp.gmail.com"
         __port = 587
+        
+        ##make the connection to the SMTP server
         self.__server = smtplib.SMTP(__host, __port)
+        self.__server.starttls()
         
 
-
-    def sendMail(self, recipient, subject, body):
-        self.__server.starttls()
+    def sendMail(self, sender, subject, body):
+        self.__msg.add_header("reply-to", sender)
         self.__server.login(USERNAME, PASSWORD)
         self.__msg.add_header("Subject", subject)
-        self.__msg.add_header("To", recipient)
         self.__msg.attach(MIMEText(body, "plain"))
-        self.__server.send_message(self.__msg)
+        #send email
+        self.__server.send_message(self.__msg) 
+        
+        
+        #close the connection
         self.__server.quit()
+        # print("\n\nDEBUG: email sent \n\n")
+
+def main():
+    eclient = EmailClient()
+    eclient.sendMail("aa@bb.cc", "whats up", "this is body")
+
+# main()
