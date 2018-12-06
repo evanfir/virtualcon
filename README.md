@@ -43,7 +43,7 @@ Uses restfull flask standard API interface
 
 ## how to use GUI/UI
 
-See to the visualManual.pdf
+See to the file visualCouselor-manual.pdf
 
 ## Structure
 
@@ -246,6 +246,24 @@ creates menu
 
 Terminates the program
 
+
+# Project Analysis
+
+This project is designed flexible to changes and the backend can be used over different platforms. 
+
+For future, this program can expanded to connect to the web and let students contact the counselor over the internet.
+
+Its API also can be helpful in case of integrating this app with other applications.
+
+The GUI's design is simple and needs improvement.
+
+The API can be expanded to give more functionality to users.
+
+The admin page is not protected at this point and anybody can change the database's values and entries. For future, a password should protect the administrator page.
+
+The survey part for students is not ready and should be worked on in the future.
+
+Crawler can be improved to crawl the text of the assist.org and get the values from menus directly. 
 
 
 
