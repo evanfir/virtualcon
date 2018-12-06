@@ -3,7 +3,7 @@ Core of the program
 Run the program's in two modes:
 
 i. with arg 'api': run the API of the program
-ii. with arg 'vc' or None: run the GUI
+ii. with arg 'gui' or None: run the GUI
 
 """
 from myFlask import runFlask
