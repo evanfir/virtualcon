@@ -1,4 +1,13 @@
 """
+Virtual Counselor
+Final Project 
+CS 03C
+Professor Ashraf
+By: Evan Firoozi, Marcello Yapura
+Email: afiroozi@go.pasadena.edu, myapura@go.pasadena.edu
+December 2018
+
+
 This file includes all the database functionalities.
 
 Currenly we handle 3 databases: 

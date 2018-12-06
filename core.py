@@ -1,4 +1,12 @@
 """
+Virtual Counselor
+Final Project 
+CS 03C
+Professor Ashraf
+By: Evan Firoozi, Marcello Yapura
+Email: afiroozi@go.pasadena.edu, myapura@go.pasadena.edu
+December 2018
+
 Core of the program
 Run the program's in two modes:
 

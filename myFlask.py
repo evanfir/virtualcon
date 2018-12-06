@@ -1,4 +1,13 @@
 """
+Virtual Counselor
+Final Project 
+CS 03C
+Professor Ashraf
+By: Evan Firoozi, Marcello Yapura
+Email: afiroozi@go.pasadena.edu, myapura@go.pasadena.edu
+December 2018
+
+
 This file is the main interface of the backend of 
 the program. We used flask restful as an standard API 
 that can be used in other programs later.

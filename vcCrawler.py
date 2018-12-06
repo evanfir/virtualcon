@@ -1,4 +1,13 @@
 """
+Virtual Counselor
+Final Project 
+CS 03C
+Professor Ashraf
+By: Evan Firoozi, Marcello Yapura
+Email: afiroozi@go.pasadena.edu, myapura@go.pasadena.edu
+December 2018
+
+
 This is the first version of our crawler that crawls assist.org to 
 get information on courses that are necessary for each CS student prior 
 to transfer to a 4 year university. 

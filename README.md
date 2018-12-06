@@ -8,6 +8,16 @@ Program designed in a way that its use can expand to all other majors.
 
 To improve the exprience, it gets the transfer information from assist.org and shows it to the student.
 
+## Credits
+
+Virtual Counselor
+Final Project 
+CS 03C
+Professor Ashraf
+By: Evan Firoozi, Marcello Yapura
+Email: afiroozi@go.pasadena.edu, myapura@go.pasadena.edu
+December 2018
+
 ## how to install and run
 
 To install requirements: 
@@ -82,6 +92,10 @@ general call:
 ### StudentApi
 
 This class is the student interface for the question and answer database and does not let student edit/add or delete question or answers.
+
+API url address:
+
+    http://127.0.0.1:5000/
 
 general call:
 

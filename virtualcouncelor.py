@@ -1,4 +1,12 @@
 """
+Virtual Counselor
+Final Project 
+CS 03C
+Professor Ashraf
+By: Evan Firoozi, Marcello Yapura
+Email: afiroozi@go.pasadena.edu, myapura@go.pasadena.edu
+December 2018
+
 This file is our appication's UI
 Uses tkinter library
 To use the GUI, call run() method

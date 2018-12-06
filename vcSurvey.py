@@ -1,4 +1,13 @@
 """
+Virtual Counselor
+Final Project 
+CS 03C
+Professor Ashraf
+By: Evan Firoozi, Marcello Yapura
+Email: afiroozi@go.pasadena.edu, myapura@go.pasadena.edu
+December 2018
+
+
 This class handles the survey for us. Currently 
 the survey is consists of one rating, one comment, 
 and student ID if its available.
