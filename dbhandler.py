@@ -1,3 +1,19 @@
+"""
+This file includes all the database functionalities.
+
+Currenly we handle 3 databases: 
+1. qa:
+    question and answers.
+    fields: ID INT, Question TEXT, Answer TEXT
+
+2. student:
+    students info
+    fields: StudentID int, FirstName TEXT, LastName TEXT, Major TEX
+
+3. survey:
+    survey results
+    fields: ID INT, Question1 TEXT, Comment TEXT
+"""
 import sqlite3
 # import json
 
@@ -73,10 +89,10 @@ class dbHandler:
         if self._dbtype == "qa":
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
-            # values = "\"" + studentID + "\""
-            selectStr = "INSERT OR REPLACE INTO " + self._dbName + " SET Answer = \"" + answer + "\" WHERE Question = \"" + question + "\""
+            values = "\"" + question + "\", \"" + answer + "\""
+            updateStr = "INSERT OR REPLACE INTO " + self._dbName + " (Question, Answer) VALUES (" + values + ");"
             # print(selectStr)
-            self._cursorObj.execute(selectStr)
+            self._cursorObj.execute(updateStr)
             self._conn.commit()
             self._conn.close()
 
@@ -96,7 +112,7 @@ class dbHandler:
     ## insert student info to the database
     # @params: studentID int, firstName str, lastName str, major str
     # check to make sure that dbtype is student before proceeding
-    def insertStudentInfo(self, studentID, firstName, lastName, major):
+    def insertStudentInfo(self, studentID = 0, firstName = "N/A", lastName = "N/A", major = "N/A"):
         if self._dbtype == "student":
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
@@ -110,12 +126,15 @@ class dbHandler:
     ## retrieve student info of a studentID
     # @params: studentID int
     # @return: studentInfo: a set of 3 values: firstName, LastName, Major
-    def retrieveStudentInfo(self, studentID):
+    def retrieveStudentInfo(self, studentID = -1):
         if self._dbtype == "student":
             self._conn = sqlite3.connect(self._dbName)
             self._cursorObj = self._conn.cursor()
             # values = "\"" + studentID + "\""
-            selectStr = "SELECT FirstName, LastName, Major FROM " + self._dbName + " WHERE StudentID = " + str(studentID)
+            if studentID == -1:
+                selectStr = "SELECT * FROM " + self._dbName
+            else:
+                selectStr = "SELECT FirstName, LastName, Major FROM " + self._dbName + " WHERE StudentID = " + str(studentID)
             self._cursorObj.execute(selectStr)
             info = self._cursorObj.fetchall()
             self._conn.close()
