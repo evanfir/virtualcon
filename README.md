@@ -265,6 +265,6 @@ The survey part for students is not ready and should be worked on in the future.
 
 Crawler can be improved to crawl the text of the assist.org and get the values from menus directly. 
 
-
+The HTML/CSS/JS UI of the application needs more work. Currently has the UI but can't show the retrieved information.
 
 
