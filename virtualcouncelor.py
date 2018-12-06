@@ -12,8 +12,11 @@ class Window(Frame):
         Frame.__init__(self, master)
         self.master = master
         # self.init_window()
-    
-   
+        # studentapi = StudentApi()
+        self.answerdb = dbHandler("qa", "qa")
+        self.surveyDB = dbHandler("survey", "survey")
+        self.studentdb = dbHandler("student", "student")
+
     def init_window(self):
         self.master.title("Virtual Councelor")
         # allowing the widget to take the full space of the root window
@@ -37,20 +40,122 @@ class Window(Frame):
 
         self.createExitButton(2, 7)
     
+
     def makeLabel(self, col, row, text = "  ", font=("Arial", 30)):
         lbl = Label(self, text=text, font = font)
         lbl.grid(column=col, row=row)
+
+    def makeLabelSub(self, tk, col, row, text = " ", font = ("Arial", 30)):
+        lbl = Label(tk, text= text, font = font)
+        lbl.grid(column = col, row = row)
 
     def clientAdmin(self):
         # self.master.title("Administrator")
         # allowing the widget to take the full space of the root window
         self.pack(fill=BOTH, expand=1)
-        adminTk = Tk()
+        self.adminTk = Tk()
         # allowing the widget to take the full space of the root window
-        adminTk.geometry("400x300")
-        adminWindow = Window(adminTk)
-        adminTk.title("Administrator Portal")
-        adminTk.mainloop()
+        self.adminTk.geometry("400x600")
+        adminWindow = Window(self.adminTk)
+        self.adminTk.title("Administrator Portal")
+        
+        self.makeLabelSub(self.adminTk, 1, 1, "Welcome to Admin Portal")
+        self.makeLabelSub(self.adminTk, 0, 0)
+        self.makeLabelSub(self.adminTk, 0, 2)
+        self.makeLabelSub(self.adminTk, 0, 3)
+        addButton = Button(self.adminTk, text="Questions and Answers", command = self.addQuestionPage, font=("Arial", 20))
+        # removeButton = Button(self.adminTk, text="Remove a Question", command = self.addQuestionPage, font=("Arial", 20))
+        # editButton = Button(self.adminTk, text="Edit an Answer", command = self.addQuestionPage, font=("Arial", 20))
+        surveyButton = Button(self.adminTk, text="Get Survey Results", command = self.retrieveSurvey, font=("Arial", 20))
+        studentButton = Button(self.adminTk, text="Get Student Info", command = self.retrieveStudentPage, font=("Arial", 20))
+        addButton.grid(column = 1, row = 4)
+        # removeButton.grid(column = 1, row = 5)
+        # editButton.grid(column = 1, row = 6)
+        surveyButton.grid(column = 1, row = 6)
+        studentButton.grid(column = 1, row = 8)
+        self.adminTk.mainloop()
+
+    def addQuestionPage(self):
+        self.addQuestionTk = Tk()
+        self.addQuestionTk.geometry("700x400")
+        addQuestionWindow = Window(self.addQuestionTk)
+        self.addQuestionTk.title("Add a Question and Answer")
+        self.makeLabelSub(self.addQuestionTk, 0, 0)
+        self.makeLabelSub(self.addQuestionTk, 1, 1, "Add a Question and Answer")
+        self.makeLabelSub(self.addQuestionTk, 0, 2)
+        self.makeLabelSub(self.addQuestionTk, 0, 3, "Question", font = ("Arial", 15))
+        self.makeLabelSub(self.addQuestionTk, 0, 4, "Answer", font = ("Arial", 15))
+        self.question = Entry(self.addQuestionTk, width = 60)
+        self.answerEntry = Entry(self.addQuestionTk, width = 60)
+        self.question.grid(column = 1, row = 3)
+        self.answerEntry.grid(column = 1, row = 4)
+        submitButton = Button(self.addQuestionTk, text="Submit", command = self.submitQuestion, font=("Arial", 20))
+        submitButton.grid(column = 1, row = 6)
+        removeButton = Button(self.addQuestionTk, text="Remove", command = self.removeQuestion, font=("Arial", 20))
+        removeButton.grid(column = 1, row = 7)
+        editButton = Button(self.addQuestionTk, text="Edit", command = self.editQuestion, font=("Arial", 20))
+        editButton.grid(column =1, row = 8)
+        answerButton = Button(self.addQuestionTk, text="Retrieve", command = self.getAnswer, font=("Arial", 20))
+        answerButton.grid(column = 1, row = 9)
+        self.addQuestionTk.mainloop()
+
+    def submitQuestion(self):
+        question = self.question.get()
+        answer = self.answerEntry.get()
+        self.answerdb.insertQuestion(question, answer)
+        self.makeLabelSub(self.addQuestionTk, 1, 10, "Question and Answer added")    
+
+    def removeQuestion(self):
+        question = self.question.get()
+        self.answerdb.deleteQuestion(question)
+        self.makeLabelSub(self.addQuestionTk, 1, 10, "Question Removed")    
+
+    def editQuestion(self):
+        question = self.question.get()
+        answer = self.answerEntry.get()
+        self.answerdb.updateQuestion(question, answer)
+        self.makeLabelSub(self.addQuestionTk, 1, 10, "Question and Answer edited")
+
+    def retrieveSurvey(self):
+        retrieveSurveyTk = Tk()
+        retrieveSurveyTk.geometry("400x500")
+        retrieveSurveyWindow = Window(retrieveSurveyTk)
+        retrieveSurveyTk.title("Survey Results")
+        self.makeLabelSub(retrieveSurveyTk, 1, 1, "Survey Results")
+        self.makeLabelSub(retrieveSurveyTk, 0, 0)
+        surveyResults = self.surveyDB.retrieveSurveyResults()
+        self.makeLabelSub(retrieveSurveyTk, 0, 2, text = "ID:", font = ("Arial", 20))
+        self.makeLabelSub(retrieveSurveyTk, 1, 2, text = "Rate:", font = ("Arial", 20))
+        self.makeLabelSub(retrieveSurveyTk, 2, 2, text = "Comment:", font = ("Arial", 20))
+            
+        for i in range(len(surveyResults)):
+            self.makeLabelSub(retrieveSurveyTk, 0, i + 3, text = str(surveyResults[i][0]), font = ("Arial", 10))
+            self.makeLabelSub(retrieveSurveyTk, 1, i + 3, text = str(surveyResults[i][1]), font = ("Arial", 10))
+            self.makeLabelSub(retrieveSurveyTk, 2, i + 3, text = str(surveyResults[i][2]), font = ("Arial", 10))
+        retrieveSurveyTk.mainloop()    
+        # print(surveyResults)
+
+    def retrieveStudentPage(self):
+        retrieveStudentTk = Tk()
+        retrieveStudentTk.geometry("600x500")
+        retrieveStudentWindow = Window(retrieveStudentTk)
+        retrieveStudentTk.title("Survey Results")
+        self.makeLabelSub(retrieveStudentTk, 2, 1, "Survey Results")
+        self.makeLabelSub(retrieveStudentTk, 0, 0)
+        studentInfo = self.studentdb.retrieveStudentInfo()
+        self.makeLabelSub(retrieveStudentTk, 0, 2, text = "ID:", font = ("Arial", 20))
+        self.makeLabelSub(retrieveStudentTk, 1, 2, text = "Name:", font = ("Arial", 20))
+        self.makeLabelSub(retrieveStudentTk, 2, 2, text = "Last Name:", font = ("Arial", 20))
+        self.makeLabelSub(retrieveStudentTk, 3, 2, text = "Major:", font = ("Arial", 20))
+            
+        for i in range(len(studentInfo)):
+            self.makeLabelSub(retrieveStudentTk, 0, i + 3, text = str(studentInfo[i][0]), font = ("Arial", 10))
+            self.makeLabelSub(retrieveStudentTk, 1, i + 3, text = str(studentInfo[i][1]), font = ("Arial", 10))
+            self.makeLabelSub(retrieveStudentTk, 2, i + 3, text = str(studentInfo[i][2]), font = ("Arial", 10))
+            self.makeLabelSub(retrieveStudentTk, 3, i + 3, text = str(studentInfo[i][3]), font = ("Arial", 10))
+
+        retrieveStudentTk.mainloop() 
+        
 
     def studentInfoPage(self):
         studentInfoTk = Tk()
@@ -81,14 +186,12 @@ class Window(Frame):
         name = self.studentName.get()
         lName = self.studentLName.get()
         major = self.studentMajor.get()
-        studentdb = dbHandler("student", "student")
-        studentdb.insertStudentInfo(studentID, name, lName, major)
+        self.studentdb.insertStudentInfo(studentID, name, lName, major)
 
         self.clientStudent()
 
     def clientStudent(self):
-        # studentapi = StudentApi()
-        self.answerdb = dbHandler("qa", "qa")
+        
         # self.master.title("Student Portal")
         # allowing the widget to take the full space of the root window
         self.pack(fill=BOTH, expand=1)
@@ -146,7 +249,6 @@ class Window(Frame):
         emailClient.sendMail(sender, subject, body)
         sentVerify = Label(self.sendEmailTk, text = "Email Sent!")
         sentVerify.grid(row = 4, column = 1)
-
 
     def getAnswer(self):
         questionText = self.question.get()
