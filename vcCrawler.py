@@ -1,9 +1,20 @@
+"""
+This is the first version of our crawler that crawls assist.org to 
+get information on courses that are necessary for each CS student prior 
+to transfer to a 4 year university. 
+Currently this program only can retrieve information for PCC students 
+that wanna transfer to UCI, UCD, UCSD, and UCLA.
+For future, this program can be expanded to other schools and universities 
+and majors.
+
+"""
 import requests
 from bs4 import BeautifulSoup
 
 class VirtualCrawler:
     def __init__(self, toCollege, fromCollege = "PASADENA"):
         self.__fromCollege = fromCollege
+        self.iframeLink = ""
         if toCollege == "UCB": #UC Berkeley
             self.__toCollege = "UCB"
             self.__major = "CS-AB"
@@ -25,10 +36,15 @@ class VirtualCrawler:
         plainText = sourceCode.text
         soup = BeautifulSoup(plainText, "html.parser")
         iframe = soup.find('iframe')
-        iframeLink = iframe['src']
+        self.iframeLink = iframe['src']
         # iframeSource = requests.get(iframeLink)
         # iframeText = iframeSource.text
-        return iframeLink
+        return self.iframeLink
+    
+    def getText(self):
+        sourceCode = requests.get(self.iframeLink)
+        plainText = sourceCode.text
+        return plainText
 
 
 def main():

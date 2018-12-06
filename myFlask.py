@@ -1,3 +1,10 @@
+"""
+This file is the main interface of the backend of 
+the program. We used flask restful as an standard API 
+that can be used in other programs later.
+In this file, we have several classes as below:
+"""
+
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
 from dbhandler import dbHandler
@@ -155,7 +162,7 @@ class EmailApi(Resource):
 
 
 ## VCrawler is the interface of vcCrawler class
-# to call: /VCrawler?to=XXXX
+# to call: /CrawlerApi?to=XXXX
 # currently only supports: UCB, UCI, UCD, and UCLA
 # only has get and returns a link to an iFrame HTML page
 class CrawlerApi(Resource):
@@ -168,6 +175,7 @@ class CrawlerApi(Resource):
         crawler = VirtualCrawler(args['to'])
         link = crawler.getiFrameLink()
         return link, 200
+
 
 ## SurveyApi is the VSurvey class
 # to call: /SurveyApi?rate=5&comment=XXXX&id=000

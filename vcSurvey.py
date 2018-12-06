@@ -1,3 +1,9 @@
+"""
+This class handles the survey for us. Currently 
+the survey is consists of one rating, one comment, 
+and student ID if its available.
+"""
+
 from dbhandler import dbHandler
 
 ##handles surveys 

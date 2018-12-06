@@ -6,3 +6,4 @@ email.mime.text
 smtplib
 beautifulsoup4
 requests
+tkinter

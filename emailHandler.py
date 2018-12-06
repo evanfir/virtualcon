@@ -1,3 +1,11 @@
+"""
+This class is a email client that allows the application 
+to send email to counselor. 
+Later this class can be expanded to receive emails from counselor 
+and add them to the database directly or make changes to questions 
+and answers.
+"""
+
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
