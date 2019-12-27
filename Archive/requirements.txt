@@ -2,8 +2,8 @@ flask
 flask_restful
 bs4
 requests
+email.mime.multipart
+email.mime.text
 smtplib
 tkinter
 sqlite3
-email.mime.multipart
-email.mime.text

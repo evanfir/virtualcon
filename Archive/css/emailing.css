@@ -1,0 +1,104 @@
+body {
+  background-color: rgb(255, 255, 255);
+  font: 300 1.25em/1.38 Ubuntu;
+  color: rgb(117, 156, 240);
+}
+
+.element {
+  position: relative;
+  float: left;
+  z-index: 0;
+  width: 54.4166666666%;
+  height: 419px;
+  margin: 39px 0 0 23.59896%;
+  border-radius: 2px;
+  background-color: rgb(222, 222, 222);
+}
+
+.text {
+  position: relative;
+  float: left;
+  clear: both;
+  z-index: 1;
+  width: 38.1666666666%;
+  min-height: 72px;
+  margin: -390px 0 0 33.03776%;
+  padding: 20px;
+  border-radius: 11px;
+  background-color: rgb(221, 221, 220);
+  font-size: 1em;
+  text-transform: uppercase;
+  word-spacing: 1px;
+  color: rgb(117, 156, 240);
+}
+
+._button {
+  display: block;
+  position: relative;
+  float: left;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+._input {
+  display: block;
+  position: relative;
+  float: left;
+  margin-left: 33.66667%;
+  padding: 0 10px;
+  background-color: rgb(242, 242, 242);
+  color: rgb(0, 0, 0);
+}
+
+._button-1 {
+  z-index: 4;
+  width: 1.5833333333%;
+  height: 21px;
+  margin: -405px 0 0 74.83724%;
+  border-radius: 3px;
+  background-color: rgb(198, 196, 196);
+  font-family: Cardo;
+  font-size: 0.8em;
+  font-weight: 400;
+}
+
+._button-2 {
+  z-index: 2;
+  width: 6.8333333333%;
+  height: 24px;
+  margin: -65px 0 0 66.88802%;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: rgb(204, 204, 204);
+  font-family: 'Roboto Condensed';
+  font-size: 0.65em;
+}
+
+._input-1 {
+  z-index: 5;
+  width: 16%;
+  height: 27px;
+  margin-top: -316px;
+  font-family: 'Roboto Condensed';
+  font-size: 0.65em;
+}
+
+._input-2 {
+  z-index: 6;
+  width: 32.0833333333%;
+  height: 27px;
+  margin-top: -276px;
+  font-family: 'Roboto Condensed';
+  font-size: 0.65em;
+}
+
+._input-3 {
+  z-index: 3;
+  width: 32.0833333333%;
+  height: 208px;
+  margin-top: -235px;
+  border-radius: 2px;
+  font-family: Cardo;
+  font-size: 0.75em;
+  font-weight: 400;
+}

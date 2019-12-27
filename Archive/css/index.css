@@ -1,0 +1,155 @@
+body {
+  background-color: rgb(255, 255, 255);
+  font: 300 1em/1.38 'Roboto Condensed';
+  color: rgb(251, 3, 3);
+}
+
+.element {
+  position: relative;
+  float: left;
+  z-index: 0;
+  width: 54.4166666666%;
+  height: 419px;
+  margin: 39px 0 0 23.5807291666%;
+  border-radius: 2px;
+  background-color: rgb(222, 222, 222);
+}
+
+.text {
+  position: relative;
+  float: left;
+}
+
+._button {
+  display: block;
+  position: relative;
+  float: left;
+  height: 40px;
+  margin-top: -74px;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: rgb(204, 204, 204);
+  font-size: 1.063em;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+._input {
+  display: block;
+  position: relative;
+  float: left;
+  width: 16%;
+  margin-left: 44%;
+  padding: 0 10px;
+  background-color: rgb(242, 242, 242);
+  font-size: 0.813em;
+  color: rgb(0, 0, 0);
+}
+
+.text-1 {
+  clear: both;
+  z-index: 1;
+  width: 38.1666666666%;
+  min-height: 72px;
+  margin: -390px 0 0 32.99349%;
+  padding: 20px;
+  border-radius: 11px;
+  background-color: rgb(221, 221, 220);
+  font-family: Ubuntu;
+  font-size: 1.25em;
+  text-transform: uppercase;
+  word-spacing: 1px;
+  color: rgb(117, 156, 240);
+}
+
+.text-2 {
+  visibility: hidden;
+  z-index: 9;
+  width: 5.1999999999%;
+  min-height: 21px;
+  margin: -295px 0 0 37.19921875%;
+  font-size: 1em;
+  color: rgb(251, 3, 3);
+}
+
+.text-3 {
+  visibility: hidden;
+  z-index: 10;
+  width: 5.19921875%;
+  min-height: 21px;
+  margin: -254px 0 0 37.19921875%;
+  font-size: 1em;
+  color: rgb(251, 3, 3);
+}
+
+.text-4 {
+  visibility: hidden;
+  z-index: 11;
+  width: 5.19921875%;
+  min-height: 21px;
+  margin: -213px 0 0 37.19921875%;
+  font-size: 1em;
+  color: rgb(251, 3, 3);
+}
+
+.text-5 {
+  visibility: hidden;
+  z-index: 12;
+  width: 5.19921875%;
+  min-height: 21px;
+  margin: -170px 0 0 37.19921875%;
+  font-size: 1em;
+  color: rgb(251, 3, 3);
+}
+
+.text-6 {
+  visibility: hidden;
+  z-index: 13;
+  width: 5.19921875%;
+  min-height: 21px;
+  margin: -125px 0 0 37.2%;
+  font-size: 1em;
+  color: rgb(251, 3, 3);
+}
+
+._button-1 {
+  z-index: 8;
+  width: 10.6822916666%;
+  margin-left: 40.11719%;
+}
+
+._button-2 {
+  z-index: 5;
+  width: 10.6833333333%;
+  margin-left: 53.71745%;
+}
+
+._input-1 {
+  z-index: 4;
+  height: 36px;
+  margin-top: -305px;
+}
+
+._input-2 {
+  z-index: 6;
+  height: 36px;
+  margin-top: -261px;
+}
+
+._input-3 {
+  z-index: 2;
+  height: 34px;
+  margin-top: -218px;
+}
+
+._input-4 {
+  z-index: 3;
+  height: 39px;
+  margin-top: -178px;
+}
+
+._input-5 {
+  z-index: 7;
+  height: 39px;
+  margin-top: -133px;
+}
